@@ -1,0 +1,3139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gacor Toko — Belanja Lebih Mudah</title>
+
+  <!-- HUBUNGAN HTML DENGAN CSS -->
+  <style>
+
+  /* ==========================================
+   CSS 1 — WARNA DAN PENGATURAN DASAR
+   Ubah warna toko di bagian :root ini.
+========================================== */
+:root {
+  --green: #176b55;
+  --green-dark: #104c3d;
+  --mint: #e2f1e8;
+  --cream: #f8f8f3;
+  --white: #ffffff;
+  --text: #202923;
+  --muted: #7c867e;
+  --border: #e8eae4;
+  --radius: 20px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 85px;
+}
+
+body {
+  background: var(--cream);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+}
+
+button, input, select, textarea {
+  font: inherit;
+}
+
+button, a, select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button:focus-visible, a:focus-visible,
+input:focus-visible, select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+}
+
+/* ==========================================
+   CSS 2 — HEADER DAN NAVIGASI
+========================================== */
+.header {
+  background: rgba(255,255,255,.96);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 16px max(5%, calc((100% - 1200px)/2));
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: -1.5px;
+  color: var(--green);
+  flex-shrink: 0;
+}
+
+.logo span {
+  color: #c88b4c;
+}
+
+.search {
+  background: #f4f5f0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  border-radius: 12px;
+  flex: 1;
+  max-width: 480px;
+}
+
+.search span {
+  font-size: 25px;
+  color: var(--muted);
+}
+
+.search input {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  min-width: 0;
+}
+
+.cart-button {
+  background: var(--green);
+  color: white;
+  border: 0;
+  padding: 11px 14px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+.cart-button b {
+  background: white;
+  color: var(--green);
+  border-radius: 50px;
+  padding: 2px 7px;
+  margin-left: 4px;
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: 35px;
+  padding: 12px;
+  background: white;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  color: #58635b;
+}
+
+.nav a:hover, .text-link:hover {
+  color: var(--green);
+}
+
+/* ==========================================
+   CSS 3 — BANNER HERO
+========================================== */
+main {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 24px;
+}
+
+.hero {
+  margin-top: 28px;
+  background: var(--mint);
+  border-radius: 28px;
+  padding: 48px 6%;
+  min-height: 380px;
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  align-items: center;
+  gap: 35px;
+  overflow: hidden;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--green);
+  margin-bottom: 10px;
+}
+
+.hero h1 {
+  font-size: clamp(35px, 4.5vw, 58px);
+  line-height: 1.08;
+  letter-spacing: -2px;
+  margin-bottom: 17px;
+}
+
+.hero h1 span {
+  color: var(--green);
+}
+
+.hero-content > p {
+  max-width: 440px;
+  font-size: 14px;
+  color: #59675e;
+  margin-bottom: 24px;
+}
+
+.primary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  border-radius: 12px;
+  background: var(--green);
+  color: white;
+  padding: 13px 20px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.primary-button:hover {
+  background: var(--green-dark);
+  transform: translateY(-2px);
+}
+
+.hero-stats {
+  display: flex;
+  gap: 25px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.hero-stats div {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-stats strong {
+  font-size: 13px;
+}
+
+.hero-stats small {
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.hero-art {
+  min-height: 280px;
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.art-circle {
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  background: #c5dfcd;
+  border-radius: 50%;
+}
+
+.art-card {
+  z-index: 1;
+  position: relative;
+  width: 210px;
+  height: 250px;
+  border-radius: 20px;
+  background: #fffdf5;
+  box-shadow: 0 20px 45px #315d451f;
+  transform: rotate(-5deg);
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.art-icon {
+  align-self: flex-end;
+  color: #c88b4c;
+}
+
+.art-label, .art-bottom {
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--muted);
+}
+
+.art-object {
+  display: grid;
+  place-items: center;
+  width: 130px;
+  height: 130px;
+  background: var(--green);
+  border-radius: 45% 45% 22% 22%;
+  color: white;
+  font-size: 80px;
+  font-weight: 900;
+}
+
+.floating-tag {
+  position: absolute;
+  z-index: 2;
+  bottom: 15px;
+  right: 0;
+  background: white;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+/* ==========================================
+   CSS 4 — KATEGORI DAN JUDUL PANEL
+========================================== */
+.section {
+  padding-top: 55px;
+}
+
+.section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 23px;
+}
+
+.section-heading h2, .modal h2 {
+  font-size: clamp(22px, 3vw, 30px);
+  letter-spacing: -.8px;
+  line-height: 1.3;
+}
+
+.section-heading p {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+.category-list {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 3px 0 8px;
+  scrollbar-width: thin;
+}
+
+.category {
+  white-space: nowrap;
+  border: 1px solid var(--border);
+  background: white;
+  border-radius: 50px;
+  padding: 10px 18px;
+  color: #525c55;
+  transition: .2s;
+}
+
+.category.active, .category:hover {
+  background: var(--green);
+  color: white;
+  border-color: var(--green);
+}
+
+.text-link {
+  color: var(--green);
+  font-weight: 700;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+/* ==========================================
+   CSS 5 — GRID KARTU PRODUK
+========================================== */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.product-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  overflow: hidden;
+  min-width: 0;
+  transition: transform .2s, box-shadow .2s;
+  cursor: pointer;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px #263b2c12;
+}
+
+.product-image {
+  height: 190px;
+  background: #edf2e9;
+  position: relative;
+  overflow: hidden;
+}
+
+.product-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform .3s;
+}
+
+.product-card:hover .product-image img {
+  transform: scale(1.04);
+}
+
+.product-emoji {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  font-size: 68px;
+}
+
+.product-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: white;
+  color: var(--green);
+  padding: 5px 8px;
+  border-radius: 7px;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.product-info {
+  padding: 14px;
+}
+
+.product-category {
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.product-info h3 {
+  font-size: 15px;
+  margin: 5px 0;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.product-description {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 7px 0;
+}
+
+.product-price {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--green);
+}
+
+.product-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: 13px;
+}
+
+.add-button {
+  border: 0;
+  background: var(--green);
+  color: white;
+  border-radius: 9px;
+  width: 37px;
+  height: 37px;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.add-button:hover {
+  background: var(--green-dark);
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  padding: 35px 15px;
+  text-align: center;
+  color: var(--muted);
+  background: white;
+  border-radius: 15px;
+}
+
+/* ==========================================
+   CSS 6 — PANEL KEUNGGULAN DAN FOOTER
+========================================== */
+.benefits {
+  margin-top: 65px;
+  padding: 28px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 25px;
+}
+
+.benefit {
+  display: flex;
+  gap: 13px;
+  align-items: flex-start;
+}
+
+.benefit > span {
+  background: var(--mint);
+  color: var(--green);
+  border-radius: 12px;
+  padding: 10px;
+  font-size: 21px;
+}
+
+.benefit strong {
+  font-size: 13px;
+}
+
+.benefit p {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.footer {
+  margin-top: 55px;
+  padding: 35px 20px;
+  background: #172b22;
+  color: white;
+  text-align: center;
+}
+
+.footer .logo {
+  color: white;
+}
+
+.footer p {
+  color: #c0ccc3;
+  font-size: 13px;
+  margin: 8px 0;
+}
+
+.footer small {
+  color: #8fa096;
+  font-size: 11px;
+}
+
+/* ==========================================
+   CSS 7 — MODAL DETAIL, KERANJANG, CHECKOUT
+========================================== */
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: #111b15a8;
+  padding: 20px;
+  overflow-y: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay.show {
+  display: flex;
+}
+
+.modal {
+  position: relative;
+  background: white;
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 22px;
+  padding: 27px;
+  box-shadow: 0 20px 80px #0002;
+}
+
+.detail-modal {
+  max-width: 720px;
+}
+
+.close {
+  position: sticky;
+  float: right;
+  top: 0;
+  margin-top: -8px;
+  margin-right: -8px;
+  z-index: 3;
+  width: 35px;
+  height: 35px;
+  background: #f1f3ed;
+  border: 0;
+  border-radius: 50%;
+  font-size: 25px;
+}
+
+.detail-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  clear: both;
+}
+
+.detail-image {
+  min-height: 270px;
+  background: #edf2e9;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.detail-image img {
+  width: 100%;
+  height: 100%;
+  min-height: 270px;
+  object-fit: cover;
+  display: block;
+}
+
+.detail-image .product-emoji {
+  min-height: 270px;
+}
+
+.detail-text {
+  padding-top: 25px;
+}
+
+.detail-text h2 {
+  margin-bottom: 10px;
+}
+
+.detail-text p {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 13px 0;
+}
+
+.detail-price {
+  font-size: 25px;
+  color: var(--green);
+  font-weight: 800;
+  margin: 14px 0;
+}
+
+.full {
+  width: 100%;
+  margin-top: 16px;
+}
+
+.cart-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  padding: 17px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.cart-row h3 {
+  font-size: 14px;
+}
+
+.cart-row small {
+  color: var(--muted);
+}
+
+.cart-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 9px;
+}
+
+.cart-controls button {
+  border: 1px solid var(--border);
+  background: #f6f7f3;
+  width: 29px;
+  height: 29px;
+  border-radius: 8px;
+}
+
+.remove-button {
+  border: 0 !important;
+  background: transparent !important;
+  color: #bd4949;
+  font-size: 12px;
+  width: auto !important;
+}
+
+.cart-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20px;
+}
+
+.cart-total strong {
+  font-size: 22px;
+  color: var(--green);
+}
+
+#checkoutForm {
+  display: grid;
+  gap: 9px;
+  margin-top: 20px;
+}
+
+#checkoutForm label {
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: 5px;
+}
+
+#checkoutForm input,
+#checkoutForm textarea,
+#checkoutForm select,
+.sort-select {
+  width: 100%;
+  border: 1px solid var(--border);
+  background: white;
+  border-radius: 10px;
+  padding: 12px;
+  color: var(--text);
+}
+
+.note {
+  margin-top: 14px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.toast {
+  position: fixed;
+  z-index: 100;
+  bottom: 25px;
+  left: 50%;
+  transform: translate(-50%, 20px);
+  opacity: 0;
+  pointer-events: none;
+  background: #172b22;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 13px;
+  transition: .25s;
+  width: max-content;
+  max-width: 90%;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* ==========================================
+   CSS 8 — RESPONSIVE UNTUK HP DAN TABLET
+========================================== */
+@media (max-width: 900px) {
+  .product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .product-image {
+    height: 165px;
+  }
+
+  .header {
+    gap: 13px;
+  }
+
+  .hero {
+    padding: 35px 5%;
+  }
+}
+
+@media (max-width: 600px) {
+  main {
+    padding: 0 15px;
+  }
+
+  .header {
+    padding: 12px 15px;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    font-size: 23px;
+  }
+
+  .search {
+    order: 3;
+    flex-basis: 100%;
+    max-width: none;
+  }
+
+  .cart-button {
+    margin-left: auto;
+    padding: 9px 10px;
+    font-size: 12px;
+  }
+
+  .nav {
+    justify-content: flex-start;
+    gap: 23px;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 12px 16px;
+  }
+
+  .hero {
+    margin-top: 15px;
+    grid-template-columns: 1fr;
+    padding: 30px 23px 15px;
+    gap: 5px;
+    border-radius: 20px;
+  }
+
+  .hero h1 {
+    font-size: 38px;
+  }
+
+  .hero-art {
+    min-height: 250px;
+  }
+
+  .art-circle {
+    width: 220px;
+    height: 220px;
+  }
+
+  .art-card {
+    width: 175px;
+    height: 210px;
+  }
+
+  .art-object {
+    width: 105px;
+    height: 105px;
+    font-size: 65px;
+  }
+
+  .floating-tag {
+    right: 0;
+    bottom: 10px;
+  }
+
+  .hero-stats {
+    gap: 16px;
+  }
+
+  .section {
+    padding-top: 38px;
+  }
+
+  .section-heading h2 {
+    font-size: 22px;
+  }
+
+  .section-heading {
+    align-items: flex-start;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 11px;
+  }
+
+  .product-image {
+    height: 145px;
+  }
+
+  .product-info {
+    padding: 10px;
+  }
+
+  .product-info h3 {
+    font-size: 13px;
+  }
+
+  .product-price {
+    font-size: 14px;
+  }
+
+  .product-bottom {
+    gap: 5px;
+  }
+
+  .add-button {
+    width: 32px;
+    height: 32px;
+  }
+
+  .sort-select {
+    max-width: 145px;
+    font-size: 11px;
+    padding: 9px 5px;
+  }
+
+  .benefits {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 20px;
+    margin-top: 40px;
+  }
+
+  .overlay {
+    padding: 10px;
+  }
+
+  .modal {
+    padding: 21px 16px;
+    border-radius: 17px;
+  }
+
+  .detail-layout {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .detail-image,
+  .detail-image img,
+  .detail-image .product-emoji {
+    min-height: 220px;
+    height: 220px;
+  }
+
+  .detail-text {
+    padding-top: 10px;
+  }
+}
+
+/* ==========================================
+ Gacortoko HERO CSS 1 — PENGATURAN MUDAH
+ Ubah nilai di sini untuk menyesuaikan desain.
+========================================== */
+
+:root {
+  --petora-green: #168b70;
+  --petora-dark: #075b49;
+  --petora-mint: #e2f3e7;
+  --petora-cream: #fffdf4;
+
+  --petora-hero-radius: 28px;
+  --petora-photo-height: 390px;
+  --petora-hero-padding: 42px;
+}
+
+/* ==========================================
+ GACOR TOKO HERO CSS 2 — BANNER UTAMA
+========================================== */
+
+.petora-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  align-items: center;
+  gap: 25px;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 400px;
+  padding: var(--petora-hero-padding);
+
+  border-radius: var(--petora-hero-radius);
+  overflow: hidden;
+
+  background-color: var(--petora-mint);
+
+  /* GAMBAR LATAR OPSIONAL */
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(245, 250, 234, 0.97) 0%,
+      rgba(234, 246, 226, 0.91) 52%,
+      rgba(225, 241, 222, 0.72) 100%
+    ),
+    url("images/petora-bg.jpg");
+
+  background-size: cover;
+  background-position: center;
+}
+
+/* ==========================================
+ PETORA HERO CSS 3 — KOLOM KIRI
+========================================== */
+
+.petora-hero .hero-content {
+  position: relative;
+  z-index: 2;
+  min-width: 0;
+  width: 100%;
+}
+
+.petora-welcome {
+  display: inline-block;
+  background: var(--petora-green);
+  color: white;
+
+  padding: 7px 18px;
+  border-radius: 30px;
+
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.petora-brand h1 {
+  color: var(--petora-dark);
+  font-size: clamp(44px, 5.5vw, 76px);
+  line-height: .95;
+  font-weight: 950;
+  letter-spacing: -3px;
+  overflow-wrap: anywhere;
+}
+
+.petora-brand h1 span {
+  font-size: 12px;
+  vertical-align: top;
+  letter-spacing: 0;
+}
+
+.petora-subtitle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: flex-start;
+
+  color: var(--petora-dark);
+  font-size: 22px;
+  font-weight: 800;
+  margin: 10px 0 24px;
+}
+
+.petora-subtitle span {
+  display: inline-block;
+  height: 3px;
+  width: 28px;
+  background: var(--petora-green);
+  border-radius: 10px;
+}
+
+.petora-hero .hero-label {
+  color: var(--petora-green);
+  font-size: 10px;
+  letter-spacing: 2px;
+  font-weight: 800;
+}
+
+.petora-hero #heroTitle {
+  color: var(--petora-dark);
+  font-size: clamp(26px, 3vw, 39px);
+  line-height: 1.13;
+  letter-spacing: -1.2px;
+  margin: 9px 0 14px;
+  overflow-wrap: anywhere;
+}
+
+.petora-heart {
+  color: var(--petora-green);
+}
+
+.petora-hero #heroDescription {
+  color: #4d6959;
+  font-size: 13px;
+  line-height: 1.8;
+  max-width: 440px;
+  margin-bottom: 20px;
+}
+
+/* ==========================================
+ PETORA HERO CSS 4 — TOMBOL BELANJA
+========================================== */
+
+.petora-shop-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+
+  background: var(--petora-green);
+  color: white;
+
+  padding: 13px 20px;
+  min-width: 205px;
+  border-radius: 40px;
+
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+
+  box-shadow: 0 8px 20px rgba(22, 139, 112, .16);
+  transition: transform .2s, background .2s;
+}
+
+.petora-shop-button span {
+  font-size: 23px;
+  line-height: 1;
+}
+
+.petora-shop-button:hover {
+  background: var(--petora-dark);
+  transform: translateY(-2px);
+}
+
+.petora-mini-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+
+  color: #527362;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+/* ==========================================
+ PETORA HERO CSS 5 — FOTO HEWAN
+========================================== */
+
+.petora-visual {
+  min-width: 0;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 0;
+}
+
+.petora-photo-frame {
+  position: relative;
+  width: 100%;
+  height: var(--petora-photo-height);
+  min-width: 0;
+
+  border-radius: 24px;
+  overflow: hidden;
+
+  background: #cce4ce;
+  box-shadow: 0 18px 38px rgba(25, 75, 50, .12);
+}
+
+.petora-pets-photo {
+  position: relative;
+  z-index: 1;
+
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+}
+
+.petora-photo-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+
+  background: linear-gradient(
+    0deg,
+    rgba(5, 55, 37, .42),
+    transparent 36%
+  );
+}
+
+.petora-paw {
+  position: absolute;
+  z-index: 3;
+  color: var(--petora-dark);
+  font-size: 27px;
+  pointer-events: none;
+}
+
+.paw-one {
+  top: 15px;
+  left: 15px;
+}
+
+.paw-two {
+  top: 50px;
+  right: 15px;
+  font-size: 21px;
+}
+
+.petora-photo-caption {
+  position: absolute;
+  z-index: 4;
+  bottom: 16px;
+  left: 14px;
+  right: 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  color: white;
+  font-weight: 800;
+  font-size: 15px;
+  text-align: center;
+  text-shadow: 0 1px 5px #123b2b;
+}
+
+.petora-photo-caption span {
+  color: #d8f4d8;
+}
+
+/* ==========================================
+ PETORA HERO CSS 6 — KARTU KEUNGGULAN
+========================================== */
+
+.petora-benefit-list {
+  position: absolute;
+  z-index: 5;
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 175px;
+  display: grid;
+  gap: 10px;
+}
+
+.petora-benefit {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: rgba(255, 255, 247, .96);
+  padding: 13px 11px;
+  border-radius: 13px;
+
+  box-shadow: 0 5px 18px rgba(27, 66, 43, .10);
+}
+
+.petora-benefit .benefit-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+
+  width: 35px;
+  height: 35px;
+  border-radius: 11px;
+
+  background: var(--petora-green);
+  color: white;
+  font-size: 17px;
+}
+
+.petora-benefit strong {
+  display: block;
+  color: var(--petora-dark);
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.petora-benefit small {
+  display: block;
+  color: #708174;
+  font-size: 8px;
+  line-height: 1.5;
+  margin-top: 3px;
+}
+
+/* ==========================================
+ PETORA HERO CSS 7 — DESKTOP MENENGAH
+========================================== */
+
+@media (min-width: 1000px) {
+  .petora-hero {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    padding-right: 35px;
+  }
+
+  .petora-visual {
+    padding-right: 125px;
+  }
+
+  .petora-benefit-list {
+    right: -5px;
+  }
+}
+
+/* ==========================================
+ PETORA HERO CSS 8 — TABLET
+========================================== */
+
+@media (min-width: 601px) and (max-width: 999px) {
+  .petora-hero {
+    grid-template-columns: minmax(0, 1fr) minmax(0, .9fr);
+    gap: 18px;
+    padding: 28px;
+  }
+
+  .petora-brand h1 {
+    font-size: clamp(38px, 6vw, 58px);
+  }
+
+  .petora-subtitle {
+    font-size: 18px;
+    margin-bottom: 17px;
+  }
+
+  .petora-photo-frame {
+    height: 310px;
+  }
+
+  .petora-visual {
+    padding-right: 0;
+    padding-bottom: 65px;
+  }
+
+  .petora-benefit-list {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: none;
+    width: 100%;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .petora-benefit {
+    padding: 9px 6px;
+    gap: 5px;
+  }
+
+  .petora-benefit .benefit-icon {
+    width: 27px;
+    height: 27px;
+    font-size: 13px;
+  }
+
+  .petora-benefit strong {
+    font-size: 9px;
+  }
+
+  .petora-benefit small {
+    display: none;
+  }
+}
+
+/* ==========================================
+ PETORA HERO CSS 9 — MOBILE
+========================================== */
+
+@media (max-width: 600px) {
+  .petora-hero {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+
+    padding: 25px 19px 20px;
+    min-height: auto;
+
+    border-radius: 20px;
+    background-position: center;
+  }
+
+  .petora-welcome {
+    font-size: 11px;
+    padding: 7px 14px;
+  }
+
+  .petora-brand h1 {
+    font-size: clamp(43px, 12vw, 65px);
+    letter-spacing: -2px;
+  }
+
+  .petora-subtitle {
+    font-size: 18px;
+    margin: 8px 0 20px;
+  }
+
+  .petora-hero #heroTitle {
+    font-size: clamp(27px, 7vw, 36px);
+  }
+
+  .petora-hero #heroDescription {
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .petora-shop-button {
+    width: 100%;
+    max-width: 290px;
+  }
+
+  .petora-mini-stats {
+    gap: 8px 14px;
+    font-size: 9px;
+  }
+
+  .petora-visual {
+    display: block;
+    padding: 0 0 0;
+    margin-top: 2px;
+  }
+
+  .petora-photo-frame {
+    height: clamp(230px, 68vw, 340px);
+    border-radius: 19px;
+  }
+
+  .petora-benefit-list {
+    position: relative;
+    inset: auto;
+    transform: none;
+
+    width: 100%;
+    margin-top: 12px;
+
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
+  }
+
+  .petora-benefit {
+    min-width: 0;
+    padding: 10px 6px;
+    flex-direction: column;
+    text-align: center;
+    gap: 7px;
+    border-radius: 12px;
+  }
+
+  .petora-benefit .benefit-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .petora-benefit strong {
+    font-size: 9px;
+    overflow-wrap: anywhere;
+  }
+
+  .petora-benefit small {
+    display: none;
+  }
+
+  .petora-photo-caption {
+    font-size: 13px;
+  }
+}
+
+/* ==========================================
+ PETORA HERO CSS 10 — HP LAYAR KECIL
+========================================== */
+
+@media (max-width: 360px) {
+  .petora-hero {
+    padding: 20px 13px;
+  }
+
+  .petora-brand h1 {
+    font-size: 41px;
+  }
+
+  .petora-benefit {
+    padding: 8px 3px;
+  }
+
+  .petora-benefit strong {
+    font-size: 8px;
+  }
+}
+
+/* ==========================================
+   DETAIL PRODUK — TEMA HIJAU ELEGAN
+========================================== */
+
+#detailContent {
+  width: 100%;
+  min-width: 0;
+}
+
+.detail-page {
+  width: 100%;
+  color: #26352e;
+  background: #fff;
+  overflow: hidden;
+  border-radius: 22px;
+}
+
+/* Foto utama */
+.detail-gallery {
+  position: relative;
+  padding: 22px;
+  background: #edf3e9;
+}
+
+.detail-photo-label {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 30px;
+  background: white;
+  color: #176d58;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+/* AREA FOTO PANEL DETAIL */
+.detail-photo-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 320px;
+  margin-top: 14px;
+  padding: 12px;
+  overflow: hidden;
+  box-sizing: border-box;
+  border-radius: 20px;
+  background: #f7faf5;
+}
+
+/* FOTO PRODUK DI PANEL DETAIL */
+.detail-product-photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 12px;
+}
+
+/* TAMPILAN HP */
+@media (max-width: 600px) {
+  .detail-photo-stage {
+    height: 300px;
+    padding: 8px;
+  }
+}
+
+/* TAMPILAN DESKTOP */
+@media (min-width: 900px) {
+  .detail-photo-stage {
+    height: 380px;
+  }
+}
+
+.detail-product-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  padding: 15px;
+  display: block;
+}
+
+.detail-fallback {
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  font-size: 95px;
+}
+
+.detail-photo-caption {
+  margin-top: 13px;
+  color: #426653;
+  font-size: 12px;
+}
+
+.detail-photo-caption span {
+  color: #168b70;
+  margin-right: 5px;
+}
+
+/* Informasi produk */
+.detail-information {
+  padding: 24px;
+}
+
+.detail-category-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.detail-category {
+  color: #168b70;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.detail-product-badge {
+  background: #e4f3e8;
+  color: #176d58;
+  border-radius: 20px;
+  padding: 5px 9px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.detail-product-title {
+  margin: 12px 0 9px;
+  color: #173d30;
+  font-size: clamp(23px, 4vw, 31px);
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.detail-rating-summary {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  font-size: 12px;
+}
+
+.detail-stars {
+  color: #e6a735;
+  letter-spacing: 2px;
+}
+
+.detail-rating-text {
+  color: #79857e;
+}
+
+.detail-product-price {
+  margin-top: 19px;
+  color: #176d58;
+  font-size: clamp(24px, 4vw, 32px);
+  font-weight: 900;
+  overflow-wrap: anywhere;
+}
+
+.detail-stock-note {
+  margin-top: 10px;
+  color: #60756a;
+  font-size: 12px;
+}
+
+.detail-stock-note span {
+  color: #168b70;
+  margin-right: 5px;
+}
+
+.detail-divider {
+  height: 1px;
+  margin: 22px 0;
+  background: #e9eee9;
+}
+
+.detail-section-title {
+  margin: 0 0 12px;
+  color: #173d30;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.detail-description {
+  color: #68776d;
+  font-size: 14px;
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+
+/* Keunggulan */
+.detail-benefits {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+  margin-top: 22px;
+}
+
+.detail-benefits > div {
+  padding: 13px 6px;
+  text-align: center;
+  background: #f2f7f0;
+  border-radius: 13px;
+  min-width: 0;
+}
+
+.detail-benefits span {
+  color: #168b70;
+  font-size: 20px;
+}
+
+.detail-benefits p {
+  margin: 6px 0 0;
+  color: #456052;
+  font-size: 10px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+/* Tombol */
+.detail-action-buttons {
+  display: grid;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.detail-buy-button,
+.detail-cart-button {
+  width: 100%;
+  min-height: 49px;
+  padding: 13px 17px;
+  border-radius: 13px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background .2s, transform .2s;
+}
+
+.detail-buy-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  color: #fff;
+  background: #176d58;
+  border: 1px solid #176d58;
+}
+
+.detail-buy-button span {
+  font-size: 22px;
+}
+
+.detail-buy-button:hover {
+  background: #0d5544;
+}
+
+.detail-cart-button {
+  color: #176d58;
+  background: #edf5ed;
+  border: 1px solid #d7e8d9;
+}
+
+.detail-cart-button:hover {
+  background: #dceee0;
+}
+
+.detail-buy-button:active,
+.detail-cart-button:active {
+  transform: scale(.99);
+}
+
+/* Ulasan */
+.detail-reviews-section {
+  padding: 23px 24px 25px;
+  background: #fafbf8;
+  border-top: 1px solid #edf0e9;
+}
+
+.detail-reviews-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.detail-reviews-eyebrow {
+  display: block;
+  margin-bottom: 7px;
+  color: #168b70;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+}
+
+.detail-review-count {
+  padding: 7px 10px;
+  border-radius: 20px;
+  color: #176d58;
+  background: #e7f2e7;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.detail-review-notice {
+  margin-bottom: 14px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #fff6df;
+  color: #795b20;
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.detail-review-list {
+  display: grid;
+  gap: 12px;
+}
+
+.detail-review-card {
+  padding: 15px;
+  background: white;
+  border: 1px solid #e8eee7;
+  border-radius: 14px;
+}
+
+.detail-review-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.detail-review-avatar {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 37px;
+  height: 37px;
+  border-radius: 50%;
+  background: #e2f2e5;
+  color: #176d58;
+  font-weight: 900;
+}
+
+.detail-review-user {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  flex: 1;
+}
+
+.detail-review-user strong {
+  color: #314b3c;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.detail-review-user span {
+  color: #8a958d;
+  font-size: 10px;
+}
+
+.detail-review-stars {
+  color: #e6a735;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.detail-review-card > p {
+  margin: 12px 0 0;
+  color: #68776d;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+/* ==========================================
+   RESPONSIVE — HP DAN TABLET
+========================================== */
+
+@media (max-width: 600px) {
+  .detail-page {
+    border-radius: 17px;
+  }
+
+  .detail-gallery {
+    padding: 15px;
+  }
+
+  .detail-photo-stage {
+    height: clamp(190px, 58vw, 270px);
+  }
+
+  .detail-information {
+    padding: 19px 16px;
+  }
+
+  .detail-reviews-section {
+    padding: 20px 16px;
+  }
+
+  .detail-benefits {
+    gap: 6px;
+  }
+
+  .detail-benefits > div {
+    padding: 12px 4px;
+  }
+
+  .detail-benefits p {
+    font-size: 9px;
+  }
+
+  .detail-review-card {
+    padding: 12px;
+  }
+}
+    
+  </style>
+</head>
+<body>
+
+  <!-- PANEL 1: HEADER DAN NAVIGASI -->
+  <header class="header">
+    <a href="#" class="logo">Gacor Toko<span>.</span></a>
+
+    <div class="search">
+      <span>⌕</span>
+      <input id="searchInput" type="search"
+        placeholder="Cari produk impianmu...">
+    </div>
+
+    <button class="cart-button" onclick="openCart()">
+      🛒 <span>Keranjang</span>
+      <b id="cartCount">0</b>
+    </button>
+  </header>
+
+  <!-- PANEL 2: MENU NAVIGASI -->
+  <nav class="nav">
+    <a href="#home">Beranda</a>
+    <a href="#products">Semua Produk</a>
+    <a href="#featured">Unggulan</a>
+    <a href="#benefits">Keunggulan</a>
+  </nav>
+
+  <main>
+
+    <!-- PANEL 3: BANNER UTAMA -->
+<section class="hero petora-hero" id="home">
+
+  <!-- KOLOM KIRI: BRAND DAN TOMBOL -->
+  <div class="hero-content">
+
+    <span class="petora-welcome">
+      Selamat datang di
+    </span>
+
+    <div class="petora-brand">
+      <h1>GACOR TOKO<span>®</span></h1>
+      <div class="petora-subtitle">
+        <span></span>
+        Jual teman
+        <span></span>
+      </div>
+    </div>
+
+    <span class="hero-label" id="heroLabel">
+      AGIL AKAN SENANG JIKA DIBELI
+    </span>
+
+    <h2 id="heroTitle">
+      Semuanya untuk<br>
+      hewanmu
+      <span class="petora-heart">♥</span>
+    </h2>
+
+    <p id="heroDescription">
+      Dari makanan, aksesori, hingga perlengkapan
+      kesehatan, semua kebutuhan hewan kesayanganmu
+      ada di sini!
+    </p>
+
+    <!-- Tombol tetap menuju katalog produk -->
+    <a href="#products" class="petora-shop-button" id="heroButton">
+      Belanja Sekarang
+      <span>→</span>
+    </a>
+
+    <!-- Keunggulan singkat -->
+    <div class="petora-mini-stats">
+      <span>♥ Pilihan produk</span>
+      <span>✦ Untuk sahabat berbulu</span>
+    </div>
+
+  </div>
+
+  <!-- KOLOM KANAN: FOTO HEWAN -->
+  <div class="petora-visual">
+
+    <div class="petora-photo-frame">
+      <div class="petora-photo-glow"></div>
+
+      <img
+        src="https://i.imgur.com/hbeaytD.jpeg"
+        alt="Anjing dan kucing kesayangan"
+        class="petora-pets-photo"
+      >
+
+      <!-- Hiasan dekoratif -->
+      <span class="petora-paw paw-one">🐾</span>
+      <span class="petora-paw paw-two">🐾</span>
+
+      <div class="petora-photo-caption">
+        <span>♥</span>
+        Mereka juga keluarga
+      </div>
+    </div>
+
+    <!-- KARTU KEUNGGULAN -->
+    <div class="petora-benefit-list">
+
+      <div class="petora-benefit">
+        <span class="benefit-icon">✦</span>
+        <div>
+          <strong>Produk Berkualitas</strong>
+          <small>Untuk sahabat kesayangan</small>
+        </div>
+      </div>
+
+      <div class="petora-benefit">
+        <span class="benefit-icon">➜</span>
+        <div>
+          <strong>Pengiriman Cepat</strong>
+          <small>Praktis dan mudah</small>
+        </div>
+      </div>
+
+      <div class="petora-benefit">
+        <span class="benefit-icon">♥</span>
+        <div>
+          <strong>Pelayanan Terbaik</strong>
+          <small>Belanja lebih nyaman</small>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+    <!-- PANEL 4: KATEGORI PRODUK -->
+    <section class="section" id="categories">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">JELAJAHI TOKO</span>
+          <h2>Belanja berdasarkan kategori</h2>
+        </div>
+      </div>
+
+      <div class="category-list">
+        <button class="category active" data-category="Semua">
+          ✦ Semua
+        </button>
+        <button class="category" data-category="Elektronik">
+          Proses
+        </button>
+        <button class="category" data-category="Fashion">
+          Proses
+        </button>
+        <button class="category" data-category="Aksesori">
+          proses
+        </button>
+        <button class="category" data-category="Lainnya">
+          ◈ Lainnya
+        </button>
+      </div>
+    </section>
+
+    <!-- PANEL 5: PRODUK UNGGULAN -->
+    <section class="section" id="featured">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">PILIHAN TOKO</span>
+          <h2>Produk unggulan</h2>
+          <p>Rekomendasi pilihan untuk kamu.</p>
+        </div>
+        <a href="#products" class="text-link">Lihat semua ↗</a>
+      </div>
+      <div class="product-grid" id="featuredGrid"></div>
+    </section>
+
+    <!-- PANEL 6: KATALOG PRODUK -->
+    <section class="section" id="products">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">KOLEKSI Gacor Toko</span>
+          <h2>Jelajahi semua produk</h2>
+          <p id="productInfo">Pilih produk yang kamu sukai.</p>
+        </div>
+        <select id="sortSelect" class="sort-select">
+          <option value="default">Urutan standar</option>
+          <option value="low">Harga terendah</option>
+          <option value="high">Harga tertinggi</option>
+          <option value="name">Nama A–Z</option>
+        </select>
+      </div>
+      <div class="product-grid" id="productGrid"></div>
+    </section>
+
+    <!-- PANEL 7: KEUNGGULAN TOKO -->
+    <section class="benefits" id="benefits">
+      <div class="benefit">
+        <span>◇</span>
+        <div><strong>Pilihan beragam</strong>
+        <p>Koleksi produk untuk berbagai kebutuhan.</p></div>
+      </div>
+      <div class="benefit">
+        <span>◎</span>
+        <div><strong>Belanja praktis</strong>
+        <p>Temukan produk melalui pencarian.</p></div>
+      </div>
+      <div class="benefit">
+        <span>↗</span>
+        <div><strong>Checkout mudah</strong>
+        <p>Rincian belanja tersusun jelas.</p></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- PANEL 8: FOOTER -->
+  <footer class="footer">
+    <a href="#home" class="logo">Gacor Toko<span>.</span></a>
+    <p>Belanja pilihanmu, dengan cara yang lebih sederhana.</p>
+    <small>© 2099 Gacor Toko. Demo toko online.</small>
+  </footer>
+
+  <!-- PANEL 9: JENDELA DETAIL PRODUK -->
+  <div class="overlay" id="detailOverlay" onclick="outsideClose(event,'detailOverlay')">
+    <div class="modal detail-modal">
+      <button class="close" onclick="closeModal('detailOverlay')">×</button>
+      <div id="detailContent"></div>
+    </div>
+  </div>
+
+  <!-- PANEL 10: JENDELA KERANJANG -->
+  <div class="overlay" id="cartOverlay" onclick="outsideClose(event,'cartOverlay')">
+    <div class="modal">
+      <button class="close" onclick="closeModal('cartOverlay')">×</button>
+      <span class="eyebrow">RINGKASAN BELANJA</span>
+      <h2>Keranjangmu</h2>
+      <div id="cartItems"></div>
+      <div class="cart-total">
+        <span>Total belanja</span>
+        <strong id="cartTotal">Rp0</strong>
+      </div>
+      <button class="primary-button full" onclick="openCheckout()">
+        Lanjut ke checkout →
+      </button>
+    </div>
+  </div>
+
+  <!-- PANEL 11: CHECKOUT -->
+  <div class="overlay" id="checkoutOverlay" onclick="outsideClose(event,'checkoutOverlay')">
+    <div class="modal">
+      <button class="close" onclick="closeModal('checkoutOverlay')">×</button>
+      <span class="eyebrow">LANGKAH TERAKHIR</span>
+      <h2>Checkout pesanan</h2>
+      <div id="checkoutSummary"></div>
+
+      <form id="checkoutForm">
+        <label>Nama penerima</label>
+        <input name="customer" required placeholder="Masukkan nama lengkap">
+
+        <label>Nomor HP</label>
+        <input name="phone" required type="tel" placeholder="Nomor yang bisa dihubungi">
+
+        <label>Alamat pengiriman</label>
+        <textarea name="address" required placeholder="Jalan, nomor rumah, kota..." rows="3"></textarea>
+
+        <label>Metode pembayaran</label>
+        <select name="payment" required>
+          <option value="">Pilih pembayaran</option>
+          <option>COD (simulasi)</option>
+          <option>Transfer bank (simulasi)</option>
+          <option>E-wallet (simulasi)</option>
+        </select>
+
+        <button type="submit" class="primary-button full">
+          Buat pesanan →
+        </button>
+      </form>
+      <p class="note">
+        Demo: pesanan hanya ditampilkan di browser dan belum dikirim ke penjual.
+      </p>
+    </div>
+  </div>
+
+  <!-- PANEL 12: NOTIFIKASI -->
+  <div id="toast" class="toast"></div>
+
+  <!-- JAVASCRIPT DITEMPATKAN DI BAGIAN 3 -->
+  <script>
+
+     /* ==========================================
+   JS 1 — DATA PRODUK TOKO
+   Ubah nama, harga, kategori, gambar, dan
+   deskripsi produk pada bagian ini.
+
+   Untuk foto sendiri:
+   1. Simpan foto di folder yang sama.
+   2. Ganti image: "" menjadi image: "foto.jpg"
+========================================== */
+
+const products = [
+  {
+    id: 1,
+    name: "Amri",
+    category: "Lainnya",
+    price: 249000,
+    emoji: "🎧",
+    image: "https://i.imgur.com/6ZMUAfd.jpeg",
+    badge: "BEST SELLER",
+    featured: true,
+    description: "Anak Berbakti ke dua orang tua."
+  },
+  {
+    id: 2,
+    name: "Darul JR",
+    category: "Lainnya",
+    price: 329000,
+    emoji: "👟",
+    image: "https://i.imgur.com/gIuWZYq.jpeg",
+    badge: "POPULAR",
+    featured: true,
+    description: "Anak Yang baik hati penyayang."
+  },
+  {
+    id: 3,
+    name: "AGIL IDAMAN",
+    category: "Lainnya",
+    price: 399000,
+    emoji: "⌚",
+    image: "https://i.imgur.com/LJbR5Uv.jpeg",
+    badge: "NEW",
+    featured: true,
+    description: "Anak Baik Baik."
+  },
+  {
+    id: 4,
+    name: "Angga Gacor",
+    category: "Lainnya",
+    price: 189000,
+    emoji: "🎒",
+    image: "https://i.imgur.com/YfaXRkA.jpeg",
+    badge: "",
+    featured: true,
+    description: "Angga Jihh bukan siapa-siapa."
+  },
+  {
+    id: 5,
+    name: "Sapi Diskon",
+    category: "Lainnya",
+    price: 99000,
+    emoji: "👕",
+    image: "https://i.imgur.com/G6xSPOr.jpeg",
+    badge: "",
+    featured: false,
+    description: "Cocok Kalau idul adha."
+  },
+  {
+    id: 6,
+    name: "Tolleng Cuit Cuit",
+    category: "Lainnya",
+    price: 179000,
+    emoji: "🔊",
+    image: "https://i.imgur.com/VtTiw9H.jpeg",
+    badge: "",
+    featured: false,
+    description: "Cowoknya rian."
+  },
+  {
+    id: 7,
+    name: "Amri Cangkul",
+    category: "Lainnya",
+    price: 79000,
+    emoji: "👛",
+    image: "https://i.imgur.com/kDXo6AU.jpeg",
+    badge: "",
+    featured: false,
+    description: "Dompet ringkas untuk menyimpan barang penting."
+  },
+  {
+    id: 8,
+    name: "Angga Kinyis Kinyis",
+    category: "Lainnya",
+    price: 59000,
+    emoji: "🗂️",
+    image: "https://i.imgur.com/HWHOmrx.jpeg",
+    badge: "VALUE",
+    featured: false,
+    description: "Istri Kedua rian."
+  }
+];
+
+
+/* ==========================================
+   JS 2 — PENGATURAN DAN FORMAT RUPIAH
+========================================== */
+
+let cart = [];
+let activeCategory = "Semua";
+let searchTerm = "";
+let sortMode = "default";
+let selectedProduct = null;
+
+const rupiah = number =>
+  new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    maximumFractionDigits: 0
+  }).format(number);
+
+function getProduct(id) {
+  return products.find(product => product.id === Number(id));
+}
+
+function getCartTotal() {
+  return cart.reduce((total, item) => {
+    const product = getProduct(item.id);
+    return total + (product ? product.price * item.qty : 0);
+  }, 0);
+}
+
+function getCartCount() {
+  return cart.reduce((total, item) => total + item.qty, 0);
+}
+
+
+/* ==========================================
+   JS 3 — KARTU PRODUK
+   Foto akan tampil jika properti image diisi.
+   Jika kosong, kartu memakai emoji.
+========================================== */
+
+function productCard(product) {
+  const visual = product.image
+    ? `<img src="${product.image}" alt="${product.name}"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
+       <div class="product-emoji" style="display:none">${product.emoji}</div>`
+    : `<div class="product-emoji">${product.emoji}</div>`;
+
+  return `
+    <article class="product-card"
+      onclick="showDetail(${product.id})"
+      tabindex="0"
+      onkeydown="if(event.key==='Enter')showDetail(${product.id})">
+
+      <div class="product-image">
+        ${visual}
+        ${product.badge
+          ? `<span class="product-badge">${product.badge}</span>`
+          : ""}
+      </div>
+
+      <div class="product-info">
+        <span class="product-category">${product.category}</span>
+        <h3>${product.name}</h3>
+        <p class="product-description">${product.description}</p>
+
+        <div class="product-bottom">
+          <span class="product-price">${rupiah(product.price)}</span>
+          <button class="add-button"
+            aria-label="Tambah ${product.name} ke keranjang"
+            onclick="event.stopPropagation();addToCart(${product.id})">
+            +
+          </button>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+
+/* ==========================================
+   JS 4 — RENDER KATALOG DAN PRODUK UNGGULAN
+========================================== */
+
+function renderProducts() {
+  const query = searchTerm.toLowerCase();
+
+  let filtered = products.filter(product => {
+    const categoryMatch =
+      activeCategory === "Semua" ||
+      product.category === activeCategory;
+
+    const searchMatch =
+      product.name.toLowerCase().includes(query) ||
+      product.category.toLowerCase().includes(query) ||
+      product.description.toLowerCase().includes(query);
+
+    return categoryMatch && searchMatch;
+  });
+
+  if (sortMode === "low") {
+    filtered.sort((a, b) => a.price - b.price);
+  } else if (sortMode === "high") {
+    filtered.sort((a, b) => b.price - a.price);
+  } else if (sortMode === "name") {
+    filtered.sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  document.getElementById("productInfo").textContent =
+    `${filtered.length} produk ditemukan`;
+
+  document.getElementById("productGrid").innerHTML =
+    filtered.length
+      ? filtered.map(productCard).join("")
+      : `<div class="empty-state">
+          Produk tidak ditemukan. Coba kata kunci lain.
+        </div>`;
+
+  const featured = products.filter(product => product.featured);
+
+  document.getElementById("featuredGrid").innerHTML =
+    featured.map(productCard).join("");
+}
+
+
+/* ==========================================
+   JS 5 — PENCARIAN, KATEGORI, DAN SORTIR
+========================================== */
+
+document.getElementById("searchInput").addEventListener("input", event => {
+  searchTerm = event.target.value.trim();
+  renderProducts();
+});
+
+document.querySelectorAll(".category").forEach(button => {
+  button.addEventListener("click", () => {
+    activeCategory = button.dataset.category;
+
+    document.querySelectorAll(".category").forEach(item => {
+      item.classList.toggle("active", item === button);
+    });
+
+    renderProducts();
+    document.getElementById("products").scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  });
+});
+
+document.getElementById("sortSelect").addEventListener("change", event => {
+  sortMode = event.target.value;
+  renderProducts();
+});
+
+
+/* ==========================================
+   js.6 DETAIL PRODUK — GACOR TOKO
+   Menampilkan foto, deskripsi, rating, ulasan,
+   serta tombol pembelian produk.
+========================================== */
+
+function showDetail(id) {
+  const product = getProduct(id);
+  if (!product) return;
+
+  selectedProduct = product;
+
+  // Foto produk dengan fallback emoji jika gagal dimuat
+  const visual = product.image
+    ? `
+      <img
+        class="detail-product-photo"
+        src="${product.image}"
+        alt="${product.name}"
+        onerror="
+          this.style.display='none';
+          this.nextElementSibling.style.display='grid';
+        "
+      >
+      <div class="detail-fallback" style="display:none">
+        ${product.emoji || "🛍️"}
+      </div>
+    `
+    : `
+      <div class="detail-fallback">
+        ${product.emoji || "🛍️"}
+      </div>
+    `;
+
+  // Rating dan ulasan contoh untuk pratinjau desain.
+  // Ganti dengan ulasan asli sebelum digunakan toko sungguhan.
+  /* ==========================================
+   DATA ULASAN PER PRODUK
+   productId harus sama dengan id produk
+========================================== */
+
+const allReviews = [
+
+  // PRODUK 1 — AMRI
+  {
+    productId: 1,
+    name: "Udin",
+    rating: 5,
+    text: "Produk sudah bagus minesnya suka fomo."
+  },
+  {
+    productId: 1,
+    name: "Uji",
+    rating: 1,
+    text: "Sayangnya Suka fomo,bintang 1 dulu."
+  },
+
+  // PRODUK 2 — DARUL JR
+  {
+    productId: 2,
+    name: "Denis",
+    rating: 5,
+    text: "Malas belajar."
+  },
+  {
+    productId: 2,
+    name: "Dimas",
+    rating: 4,
+    text: "Terserah barang rusak."
+  },
+
+  // PRODUK 3 — AGIL IDAMAN
+  {
+    productId: 3,
+    name: "Rian",
+    rating: 5,
+    text: "Anak yang baik tidak sombong."
+  },
+  {
+    productId: 3,
+    name: "Aldi",
+    rating: 4,
+    text: "suka dengan orangnya,berkualitas."
+  },
+
+  // PRODUK 4 — ANGGA GACOR
+  {
+    productId: 4,
+    name: "Amri",
+    rating: 5,
+    text: "Si angga suka rian."
+  },
+  {
+    productId: 4,
+    name: "Dirham",
+    rating: 4,
+    text: "Saya kan juga suka rian."
+  },
+
+  // PRODUK 5 — 
+  {
+    productId: 5,
+    name: "Agil",
+    rating: 5,
+    text: "Ukuran jumbo pas."
+  },
+  {
+    productId: 5,
+    name: "Rian",
+    rating: 4,
+    text: "Wadada."
+  },
+
+  // PRODUK 6 — 
+  {
+    productId: 6,
+    name: "Rian",
+    rating: 5,
+    text: "Kiw Kiw tolleng jih."
+  },
+  {
+    productId: 6,
+    name: "Abba",
+    rating: 4,
+    text: "Awwihe."
+  },
+
+  // PRODUK 7 — 
+  {
+    productId: 7,
+    name: "Darul",
+    rating: 5,
+    text: "Pekerja keras banget."
+  },
+  {
+    productId: 7,
+    name: "Hairul",
+    rating: 4,
+    text: "Beee gayanu."
+  },
+
+  // PRODUK 8 — 
+  {
+    productId: 8,
+    name: "rian",
+    rating: 5,
+    text: "Gak ada obat emang."
+  },
+  {
+    productId: 8,
+    name: "tolleng",
+    rating: 4,
+    text: "Kandaeeee."
+  }
+
+];
+
+// PILIH ULASAN KHUSUS PRODUK YANG DIBUKA
+const reviews = allReviews.filter(
+  review => Number(review.productId) === Number(product.id)
+);
+
+  const reviewHTML = reviews.map(review => `
+    <article class="detail-review-card">
+      <div class="detail-review-top">
+        <div class="detail-review-avatar">
+          ${review.name.charAt(0)}
+        </div>
+
+        <div class="detail-review-user">
+          <strong>${review.name}</strong>
+          <span>Ulasan contoh</span>
+        </div>
+
+        <span class="detail-review-stars">
+          ${"★".repeat(review.rating)}${"☆".repeat(5 - review.rating)}
+        </span>
+      </div>
+
+      <p>${review.text}</p>
+    </article>
+  `).join("");
+
+  document.getElementById("detailContent").innerHTML = `
+    <div class="detail-page">
+
+      <!-- BAGIAN FOTO -->
+      <div class="detail-gallery">
+        <span class="detail-photo-label">
+          ✦ PRODUK PILIHAN
+        </span>
+
+        <div class="detail-photo-stage">
+          ${visual}
+        </div>
+
+        <div class="detail-photo-caption">
+          <span>✓</span>
+          Kenali produk pilihanmu
+        </div>
+      </div>
+
+      <!-- INFORMASI PRODUK -->
+      <div class="detail-information">
+
+        <div class="detail-category-row">
+          <span class="detail-category">
+            ${product.category || "Produk"}
+          </span>
+
+          ${product.badge
+            ? `<span class="detail-product-badge">
+                 ${product.badge}
+               </span>`
+            : ""
+          }
+        </div>
+
+        <h2 class="detail-product-title">
+          ${product.name}
+        </h2>
+
+        <div class="detail-rating-summary">
+          <span class="detail-stars">★★★★★</span>
+          <span class="detail-rating-text">
+            Pratinjau ulasan
+          </span>
+        </div>
+
+        <div class="detail-product-price">
+          ${rupiah(product.price)}
+        </div>
+
+        <div class="detail-stock-note">
+          <span>●</span>
+          Pilihan produk untuk kebutuhanmu
+        </div>
+
+        <div class="detail-divider"></div>
+
+        <h3 class="detail-section-title">
+          Tentang produk
+        </h3>
+
+        <p class="detail-description">
+          ${product.description || "Belum ada deskripsi untuk produk ini."}
+        </p>
+
+        <div class="detail-benefits">
+          <div>
+            <span>✦</span>
+            <p>Produk pilihan</p>
+          </div>
+
+          <div>
+            <span>♡</span>
+            <p>Belanja praktis</p>
+          </div>
+
+          <div>
+            <span>✓</span>
+            <p>Informasi jelas</p>
+          </div>
+        </div>
+
+        <!-- TOMBOL PEMBELIAN -->
+        <div class="detail-action-buttons">
+
+          <button
+            type="button"
+            class="detail-buy-button"
+            onclick="buyNow(${product.id})"
+          >
+            Beli Sekarang
+            <span>→</span>
+          </button>
+
+          <button
+            type="button"
+            class="detail-cart-button"
+            onclick="addToCart(${product.id})"
+          >
+            + Tambah ke Keranjang
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- BAGIAN ULASAN -->
+      <section class="detail-reviews-section">
+
+        <div class="detail-reviews-heading">
+          <div>
+            <span class="detail-reviews-eyebrow">
+              PENDAPAT PEMBELI
+            </span>
+
+            <h3 class="detail-section-title">
+              Ulasan Produk
+            </h3>
+          </div>
+
+          <span class="detail-review-count">
+            2 contoh
+          </span>
+        </div>
+
+        <div class="detail-review-notice">
+          Catatan: ulasan berikut hanya contoh tampilan,
+          bukan ulasan pembeli sungguhan.
+        </div>
+
+        <div class="detail-review-list">
+          ${reviewHTML}
+        </div>
+
+      </section>
+
+    </div>
+  `;
+
+  openModal("detailOverlay");
+}
+
+function openModal(id) {
+  document.getElementById(id).classList.add("show");
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove("show");
+
+  if (!document.querySelector(".overlay.show")) {
+    document.body.style.overflow = "";
+  }
+}
+
+function outsideClose(event, id) {
+  if (event.target.id === id) closeModal(id);
+}
+
+function buyNow(id) {
+  addToCart(id, false);
+  closeModal("detailOverlay");
+  openCheckout();
+}
+
+
+/* ==========================================
+   JS 7 — KERANJANG BELANJA
+========================================== */
+
+function addToCart(id, notify = true) {
+  const product = getProduct(id);
+  if (!product) return;
+
+  const existing = cart.find(item => item.id === product.id);
+
+  if (existing) {
+    existing.qty++;
+  } else {
+    cart.push({ id: product.id, qty: 1 });
+  }
+
+  renderCart();
+
+  if (notify) {
+    showToast(product.name + " ditambahkan ke keranjang");
+  }
+}
+
+function changeQty(id, amount) {
+  const item = cart.find(item => item.id === Number(id));
+  if (!item) return;
+
+  item.qty += amount;
+
+  if (item.qty <= 0) {
+    cart = cart.filter(item => item.id !== Number(id));
+  }
+
+  renderCart();
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(item => item.id !== Number(id));
+  renderCart();
+}
+
+function renderCart() {
+  document.getElementById("cartCount").textContent = getCartCount();
+
+  const container = document.getElementById("cartItems");
+
+  if (cart.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state" style="margin-top:20px">
+        🛒<br>Keranjang masih kosong.<br>
+        Yuk, temukan produk favoritmu!
+      </div>`;
+  } else {
+    container.innerHTML = cart.map(item => {
+      const product = getProduct(item.id);
+      if (!product) return "";
+
+      return `
+        <div class="cart-row">
+          <div>
+            <h3>${product.name}</h3>
+            <small>${rupiah(product.price)} per item</small>
+            <div class="cart-controls">
+              <button onclick="changeQty(${product.id},-1)">−</button>
+              <span>${item.qty}</span>
+              <button onclick="changeQty(${product.id},1)">+</button>
+              <button class="remove-button"
+                onclick="removeFromCart(${product.id})">Hapus</button>
+            </div>
+          </div>
+          <strong>${rupiah(product.price * item.qty)}</strong>
+        </div>
+      `;
+    }).join("");
+  }
+
+  document.getElementById("cartTotal").textContent =
+    rupiah(getCartTotal());
+}
+
+function openCart() {
+  renderCart();
+  openModal("cartOverlay");
+}
+
+
+/* ==========================================
+   JS 8 — CHECKOUT DAN SIMULASI PESANAN
+========================================== */
+
+function openCheckout() {
+  if (cart.length === 0) {
+    showToast("Keranjang masih kosong");
+    return;
+  }
+
+  document.getElementById("checkoutSummary").innerHTML = `
+    <div class="cart-total">
+      <span>${getCartCount()} barang</span>
+      <strong>${rupiah(getCartTotal())}</strong>
+    </div>`;
+
+  closeModal("cartOverlay");
+  openModal("checkoutOverlay");
+}
+
+document.getElementById("checkoutForm").addEventListener("submit", event => {
+  event.preventDefault();
+
+  if (cart.length === 0) {
+    closeModal("checkoutOverlay");
+    showToast("Keranjang masih kosong");
+    return;
+  }
+
+  const form = new FormData(event.target);
+
+  const orderNumber =
+    "NV" + Date.now().toString().slice(-8);
+
+  const orderDetails = cart.map(item => {
+    const product = getProduct(item.id);
+    return product
+      ? `${product.name} x${item.qty} = ${rupiah(product.price * item.qty)}`
+      : "";
+  }).filter(Boolean).join("\n");
+
+  const message =
+`PESANAN DEMO NOVA STORE
+Nomor: ${orderNumber}
+
+Nama: ${form.get("customer")}
+Nomor HP: ${form.get("phone")}
+Alamat: ${form.get("address")}
+Pembayaran: ${form.get("payment")}
+
+${orderDetails}
+
+TOTAL: ${rupiah(getCartTotal())}`;
+
+  closeModal("checkoutOverlay");
+  event.target.reset();
+
+  // Menampilkan ringkasan pesanan di browser.
+  // Belum mengirim data ke server atau penjual.
+  document.getElementById("detailContent").innerHTML = `
+    <div style="clear:both;padding:20px 0">
+      <span class="eyebrow">SIMULASI BERHASIL</span>
+      <h2>Pesanan telah dibuat!</h2>
+      <p style="margin:12px 0;color:#7c867e;font-size:13px">
+        Nomor pesanan: <strong>${orderNumber}</strong>
+      </p>
+      <pre style="white-space:pre-wrap;overflow-wrap:anywhere;
+        background:#f4f5f0;padding:15px;border-radius:12px;
+        font:12px/1.8 Arial">${message}</pre>
+      <button class="primary-button full"
+        onclick="copyOrder(${JSON.stringify(message).replace(/</g,'\\u003c')})">
+        Salin rincian pesanan
+      </button>
+      <button class="primary-button full"
+        style="background:#edf2e9;color:#176b55"
+        onclick="closeModal('detailOverlay')">
+        Kembali ke toko
+      </button>
+    </div>`;
+
+  cart = [];
+  renderCart();
+  openModal("detailOverlay");
+});
+
+async function copyOrder(message) {
+  try {
+    await navigator.clipboard.writeText(message);
+    showToast("Rincian pesanan berhasil disalin");
+  } catch {
+    showToast("Silakan salin rincian pesanan secara manual");
+  }
+}
+
+
+/* ==========================================
+   JS 9 — NOTIFIKASI DAN INISIALISASI
+========================================== */
+
+let toastTimeout;
+
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2200);
+}
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") {
+    document.querySelectorAll(".overlay.show").forEach(modal => {
+      closeModal(modal.id);
+    });
+  }
+});
+
+renderProducts();
+renderCart();
+    
+  </script>
+
+<!-- =====================================
+     MUSIK LATAR WEBSITE
+     Autoplay + Loop + Tombol Musik
+===================================== -->
+
+<audio
+  id="backgroundMusic"
+  loop
+  preload="auto"
+  autoplay
+>
+  <source src="music/musik-toko.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Tombol kontrol musik -->
+<button
+  id="musicToggle"
+  type="button"
+  aria-label="Nyalakan musik"
+  title="Musik latar"
+>
+  ♫ <span id="musicStatus">Musik</span>
+</button>
+
+<style>
+  /* Tombol musik mengambang */
+  #musicToggle {
+    position: fixed;
+    right: 16px;
+    bottom: 85px;
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 12px 16px;
+    border: 1px solid rgba(255,255,255,.3);
+    border-radius: 30px;
+
+    background: #176d58;
+    color: white;
+
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+
+    box-shadow: 0 5px 18px rgba(23,109,88,.25);
+    transition: transform .2s, background .2s;
+  }
+
+  #musicToggle:active {
+    transform: scale(.96);
+  }
+
+  #musicToggle:hover {
+    background: #105541;
+  }
+
+  @media (min-width: 768px) {
+    #musicToggle {
+      right: 25px;
+      bottom: 25px;
+    }
+  }
+</style>
+
+<script>
+  /* =====================================
+     PENGATUR MUSIK LATAR
+  ===================================== */
+
+  const backgroundMusic =
+    document.getElementById("backgroundMusic");
+
+  const musicToggle =
+    document.getElementById("musicToggle");
+
+  const musicStatus =
+    document.getElementById("musicStatus");
+
+  // Volume awal: 30%
+  backgroundMusic.volume = 0.3;
+
+  // Perbarui tampilan tombol
+  function updateMusicButton(isPlaying) {
+    musicStatus.textContent =
+      isPlaying ? "Musik Aktif" : "Nyalakan Musik";
+
+    musicToggle.setAttribute(
+      "aria-label",
+      isPlaying ? "Matikan musik" : "Nyalakan musik"
+    );
+
+    musicToggle.style.background =
+      isPlaying ? "#176d58" : "#52675d";
+  }
+
+  // Coba memulai musik otomatis
+  backgroundMusic.play()
+    .then(() => {
+      updateMusicButton(true);
+    })
+    .catch(() => {
+      // Browser mungkin memblokir autoplay.
+      updateMusicButton(false);
+    });
+
+  // Tombol hidup/mati musik
+  musicToggle.addEventListener("click", async () => {
+    if (backgroundMusic.paused) {
+      try {
+        await backgroundMusic.play();
+        updateMusicButton(true);
+      } catch (error) {
+        updateMusicButton(false);
+      }
+    } else {
+      backgroundMusic.pause();
+      updateMusicButton(false);
+    }
+  });
+
+  // Sinkronisasi jika musik berhenti atau gagal
+  backgroundMusic.addEventListener("pause", () => {
+    updateMusicButton(false);
+  });
+
+  backgroundMusic.addEventListener("play", () => {
+    updateMusicButton(true);
+  });
+</script>
+  
+</body>
+</html>
