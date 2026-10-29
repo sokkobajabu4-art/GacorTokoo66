@@ -2271,7 +2271,7 @@ const products = [
     image: "https://i.imgur.com/kDXo6AU.jpeg",
     badge: "",
     featured: false,
-    description: "Amri si pekerja keras dapat mencangkul dan membelah bumi."
+    description: "Dompet ringkas untuk menyimpan barang penting."
   },
   {
     id: 8,
@@ -2280,10 +2280,10 @@ const products = [
     price: 59000,
     emoji: "🗂️",
     image: "https://i.imgur.com/HWHOmrx.jpeg",
-    badge: "VALUE",
+    badge: "Langka",
     featured: false,
     description: "Istri Kedua rian."
-  }, 
+  },
   {
     id: 9,
     name: "Rian cogan",
@@ -2295,7 +2295,6 @@ const products = [
     featured: false,
     description: "Rian si penakluk hati orang ."
   }
-  
 ];
 
 
@@ -2606,8 +2605,7 @@ const allReviews = [
     name: "tolleng",
     rating: 4,
     text: "Kandaeeee."
-  }, 
-
+  },
   // PRODUK 9 — 
   {
     productId: 9,
@@ -2634,12 +2632,25 @@ const allReviews = [
     text: "Rian Love tolleng."
   }
   
+
 ];
 
-// PILIH ULASAN KHUSUS PRODUK YANG DIBUKA
-const reviews = allReviews.filter(
-  review => Number(review.productId) === Number(product.id)
-);
+// Gabungkan ulasan awal dengan ulasan yang disimpan pembeli
+const reviews = [
+  ...allReviews.filter(
+    review => Number(review.productId) === Number(product.id)
+  ),
+  ...getSavedProductReviews(product.id)
+];
+
+  // Menghitung rata-rata rating produk
+const averageRating = reviews.length
+  ? reviews.reduce((sum, review) => sum + Number(review.rating || 0), 0)
+    / reviews.length
+  : 0;
+
+const averageStars = "★".repeat(Math.round(averageRating))
+  + "☆".repeat(5 - Math.round(averageRating));
 
   const reviewHTML = reviews.map(review => `
     <article class="detail-review-card">
@@ -2658,7 +2669,7 @@ const reviews = allReviews.filter(
         </span>
       </div>
 
-      <p>${review.text}</p>
+        <p>${escapeReviewHTML(review.text)}</p>
     </article>
   `).join("");
 
@@ -2702,11 +2713,12 @@ const reviews = allReviews.filter(
         </h2>
 
         <div class="detail-rating-summary">
-          <span class="detail-stars">★★★★★</span>
-          <span class="detail-rating-text">
-            Pratinjau ulasan
-          </span>
-        </div>
+  <span class="detail-stars">${averageStars}</span>
+  <span class="detail-rating-text">
+    ${reviews.length ? averageRating.toFixed(1) + " dari 5" : "Belum ada rating"}
+    · ${reviews.length} ulasan
+  </span>
+</div>
 
         <div class="detail-product-price">
           ${rupiah(product.price)}
@@ -2796,12 +2808,183 @@ const reviews = allReviews.filter(
           ${reviewHTML}
         </div>
 
+        <!-- FORMULIR ULASAN PEMBELI -->
+<div class="review-form-panel">
+
+  <div class="review-form-heading">
+    <span class="detail-reviews-eyebrow">
+      BAGIKAN PENGALAMANMU
+    </span>
+    <h3 class="detail-section-title">
+      Tulis Ulasan
+    </h3>
+    <p>Bantu pembeli lain mengenal produk ini.</p>
+  </div>
+
+  <form
+    class="interactive-review-form"
+    onsubmit="submitProductReview(event, ${product.id})"
+  >
+
+    <label for="reviewerName">Nama kamu</label>
+    <input
+      type="text"
+      name="reviewerName"
+      id="reviewerName"
+      maxlength="40"
+      placeholder="Masukkan nama"
+      required
+    >
+
+    <label>Berikan rating</label>
+    <div class="review-rating-options">
+      <label>
+        <input type="radio" name="reviewRating" value="1" required>
+        <span>★</span>
+      </label>
+      <label>
+        <input type="radio" name="reviewRating" value="2">
+        <span>★★</span>
+      </label>
+      <label>
+        <input type="radio" name="reviewRating" value="3">
+        <span>★★★</span>
+      </label>
+      <label>
+        <input type="radio" name="reviewRating" value="4">
+        <span>★★★★</span>
+      </label>
+      <label>
+        <input type="radio" name="reviewRating" value="5">
+        <span>★★★★★</span>
+      </label>
+    </div>
+
+    <label for="reviewComment">Komentar</label>
+    <textarea
+      name="reviewComment"
+      id="reviewComment"
+      rows="4"
+      maxlength="500"
+      placeholder="Bagaimana pendapatmu tentang produk ini?"
+      required
+    ></textarea>
+
+    <button type="submit" class="submit-review-button">
+      Kirim Ulasan <span>→</span>
+    </button>
+
+    <p class="review-privacy-note">
+      Ulasan tersimpan di browser pada perangkat ini.
+    </p>
+
+  </form>
+</div>
+
       </section>
 
     </div>
   `;
 
   openModal("detailOverlay");
+}
+
+/* ==========================================
+   SISTEM ULASAN INTERAKTIF
+   Penyimpanan lokal berdasarkan ID produk
+========================================== */
+
+// Mengambil ulasan yang tersimpan untuk produk tertentu
+function getSavedProductReviews(productId) {
+  try {
+    const all = JSON.parse(
+      localStorage.getItem("gacorTokoProductReviews") || "{}"
+    );
+
+    return Array.isArray(all[String(productId)])
+      ? all[String(productId)]
+      : [];
+  } catch (error) {
+    console.error("Gagal membaca ulasan:", error);
+    return [];
+  }
+}
+
+// Mengamankan teks sebelum dimasukkan ke HTML
+function escapeReviewHTML(value) {
+  return String(value).replace(/[&<>"']/g, function (char) {
+    return {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    }[char];
+  });
+}
+
+// Menyimpan ulasan baru
+function submitProductReview(event, productId) {
+  event.preventDefault();
+
+  const form = event.currentTarget;
+  const name = form.elements.reviewerName.value.trim();
+  const comment = form.elements.reviewComment.value.trim();
+  const rating = Number(form.elements.reviewRating.value);
+
+  if (name.length < 2) {
+    alert("Nama harus terdiri dari minimal 2 karakter.");
+    return;
+  }
+
+  if (comment.length < 5) {
+    alert("Komentar minimal 5 karakter.");
+    return;
+  }
+
+  if (name.length > 40 || comment.length > 500) {
+    alert("Nama maksimal 40 karakter dan komentar maksimal 500 karakter.");
+    return;
+  }
+
+  if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
+    alert("Silakan pilih rating 1 sampai 5 bintang.");
+    return;
+  }
+
+  try {
+    const all = JSON.parse(
+      localStorage.getItem("gacorTokoProductReviews") || "{}"
+    );
+
+    const key = String(productId);
+
+    if (!Array.isArray(all[key])) {
+      all[key] = [];
+    }
+
+    all[key].push({
+      id: Date.now(),
+      name: name,
+      rating: rating,
+      text: comment,
+      date: new Date().toLocaleDateString("id-ID")
+    });
+
+    localStorage.setItem(
+      "gacorTokoProductReviews",
+      JSON.stringify(all)
+    );
+
+    alert("Ulasan berhasil disimpan di perangkat ini!");
+
+    // Muat ulang detail produk agar ulasan terbaru langsung tampil
+    showDetail(productId);
+
+  } catch (error) {
+    console.error("Gagal menyimpan ulasan:", error);
+    alert("Ulasan gagal disimpan. Periksa penyimpanan browser.");
+  }
 }
 
 function openModal(id) {
@@ -3105,6 +3288,151 @@ renderCart();
       bottom: 25px;
     }
   }
+
+  /* ==========================================
+   FORM ULASAN INTERAKTIF
+========================================== */
+
+.review-form-panel {
+  margin-top: 22px;
+  padding: 20px;
+  border: 1px solid #e4ece3;
+  border-radius: 16px;
+  background: #fff;
+}
+
+.review-form-heading p {
+  margin: 0 0 18px;
+  color: #758279;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.interactive-review-form {
+  display: grid;
+  gap: 10px;
+}
+
+.interactive-review-form > label {
+  color: #294c3b;
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: 6px;
+}
+
+.interactive-review-form input[type="text"],
+.interactive-review-form textarea {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #dce7dc;
+  border-radius: 11px;
+  background: #fbfdf9;
+  padding: 13px;
+  color: #26352e;
+  font: inherit;
+  font-size: 13px;
+  outline: none;
+}
+
+.interactive-review-form input[type="text"]:focus,
+.interactive-review-form textarea:focus {
+  border-color: #168b70;
+  box-shadow: 0 0 0 3px rgba(22, 139, 112, .10);
+}
+
+.interactive-review-form textarea {
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.7;
+}
+
+.review-rating-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.review-rating-options label {
+  cursor: pointer;
+}
+
+.review-rating-options input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.review-rating-options span {
+  display: inline-block;
+  padding: 9px;
+  border: 1px solid #e5e9e1;
+  border-radius: 9px;
+  background: #f7f9f4;
+  color: #d6a13b;
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+.review-rating-options input:checked + span {
+  background: #fff3d5;
+  border-color: #e0b650;
+}
+
+.review-rating-options input:focus-visible + span {
+  outline: 2px solid #168b70;
+  outline-offset: 2px;
+}
+
+.submit-review-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  margin-top: 8px;
+  padding: 14px 17px;
+  border: 0;
+  border-radius: 12px;
+  background: #176d58;
+  color: white;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.submit-review-button:hover {
+  background: #0d5544;
+}
+
+.submit-review-button span {
+  font-size: 20px;
+}
+
+.review-privacy-note {
+  margin: 2px 0 0;
+  color: #7c8980;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+  .review-form-panel {
+    padding: 15px;
+    border-radius: 13px;
+  }
+
+  .review-rating-options {
+    gap: 5px;
+  }
+
+  .review-rating-options span {
+    padding: 8px 6px;
+    font-size: 12px;
+  }
+}
 </style>
 
 <script>
