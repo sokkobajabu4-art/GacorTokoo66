@@ -1901,7 +1901,6 @@ main {
 <!-- Firebase SDK untuk GACORTOKO -->
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
 </head>
 <body>
 
@@ -2301,14 +2300,14 @@ const products = [
   },
   {
     id: 10,
-    name: "Testing",
+    name: "komentar",
     category: "Lainnya",
-    price: 999999999,
+    price: 500000,
     emoji: "🗂️",
     image: "",
-    badge: "Test",
+    badge: "komentar",
     featured: false,
-    description: "test ."
+    description: "komentar."
   }
 ];
 
@@ -2324,25 +2323,6 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
-const auth = firebase.auth();
-
-const authReady = new Promise((resolve, reject) => {
-  const unsubscribe = auth.onAuthStateChanged(async user => {
-    unsubscribe();
-
-    if (user) {
-      resolve(user);
-      return;
-    }
-
-    try {
-      const result = await auth.signInAnonymously();
-      resolve(result.user);
-    } catch (error) {
-      reject(error);
-    }
-  });
-});
 
 /* ==========================================
    JS 2 — PENGATURAN DAN FORMAT RUPIAH
@@ -2692,10 +2672,7 @@ const snapshot = await database
 const onlineReviews = [];
 
 snapshot.forEach(child => {
-  onlineReviews.push({
-    ...child.val(),
-    reviewKey: child.key
-  });
+  onlineReviews.push(child.val());
 });
 
 const reviews = [
@@ -2715,44 +2692,26 @@ const averageRating = reviews.length
 const averageStars = "★".repeat(Math.round(averageRating))
   + "☆".repeat(5 - Math.round(averageRating));
 
-  const currentUser = auth.currentUser;
+  const reviewHTML = reviews.map(review => `
+    <article class="detail-review-card">
+      <div class="detail-review-top">
+        <div class="detail-review-avatar">
+          ${review.name.charAt(0)}
+        </div>
 
-const reviewHTML = reviews.map(review => `
-  <article class="detail-review-card">
-    <div class="detail-review-top">
-      <div class="detail-review-avatar">
-        ${escapeReviewHTML(review.name.charAt(0))}
+        <div class="detail-review-user">
+          <strong>${review.name}</strong>
+          <span>Ulasan contoh</span>
+        </div>
+
+        <span class="detail-review-stars">
+          ${"★".repeat(review.rating)}${"☆".repeat(5 - review.rating)}
+        </span>
       </div>
 
-      <div class="detail-review-user">
-        <strong>${escapeReviewHTML(review.name)}</strong>
-        <span>Ulasan pembeli</span>
-      </div>
-
-      <span class="detail-review-stars">
-        ${"★".repeat(Number(review.rating) || 0)}${"☆".repeat(5 - (Number(review.rating) || 0))}
-      </span>
-    </div>
-
-    <p>${escapeReviewHTML(review.text)}</p>
-
-    ${
-      currentUser &&
-      review.reviewKey &&
-      review.userId === currentUser.uid
-        ? `
-          <button
-            type="button"
-            class="delete-review-btn"
-            onclick="deleteProductReview('${review.reviewKey}')"
-          >
-            Hapus ulasan
-          </button>
-        `
-        : ""
-    }
-  </article>
-`).join("");
+        <p>${escapeReviewHTML(review.text)}</p>
+    </article>
+  `).join("");
 
   document.getElementById("detailContent").innerHTML = `
     <div class="detail-page">
@@ -2986,9 +2945,9 @@ function getSavedProductReviews(productId) {
       ? all[String(productId)]
       : [];
   } catch (error) {
-  console.error("ERROR ULASAN:", error);
-  alert("Gagal: " + error.code + "\n" + error.message);
-}
+    console.error("Gagal membaca ulasan:", error);
+    return [];
+  }
 }
 
 // Mengamankan teks sebelum dimasukkan ke HTML
@@ -3021,16 +2980,13 @@ async function submitProductReview(event, productId) {
     return;
   }
 
-  try{
-    const user = await authReady;
-
-await database.ref("productReviews").push({
-  productId: id,
-  name,
-  rating,
-  text: comment,
-  date: new Date().toLocaleDateString("id-ID"),
-  userId: user.uid
+  try {
+    await database.ref("productReviews").push({
+      productId: id,
+      name,
+      rating,
+      text: comment,
+      date: new Date().toLocaleDateString("id-ID")
     });
 
     alert("Ulasan berhasil dikirim!");
@@ -3041,28 +2997,6 @@ await database.ref("productReviews").push({
   }
 }
 
-async function deleteProductReview(reviewKey) {
-  if (!reviewKey) return;
-
-  try {
-    const user = await authReady;
-
-    if (!confirm("Yakin ingin menghapus ulasan ini?")) {
-      return;
-    }
-
-    await database
-      .ref("productReviews/" + reviewKey)
-      .remove();
-
-    alert("Ulasan berhasil dihapus.");
-    location.reload();
-  } catch (error) {
-    console.error(error);
-    alert("Ulasan gagal dihapus. Periksa koneksi dan kepemilikan ulasan.");
-  }
-}
-    
 function openModal(id) {
   document.getElementById(id).classList.add("show");
   document.body.style.overflow = "hidden";
@@ -3508,23 +3442,6 @@ renderCart();
     padding: 8px 6px;
     font-size: 12px;
   }
-}
-
-.delete-review-btn {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 8px 14px;
-  border: 1px solid #f2caca;
-  border-radius: 9px;
-  background: #fff1f1;
-  color: #c62828;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.delete-review-btn:active {
-  transform: scale(0.97);
 }
 </style>
 
