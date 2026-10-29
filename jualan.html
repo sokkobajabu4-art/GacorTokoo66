@@ -2986,9 +2986,9 @@ function getSavedProductReviews(productId) {
       ? all[String(productId)]
       : [];
   } catch (error) {
-    console.error("Gagal membaca ulasan:", error);
-    return [];
-  }
+  console.error("ERROR ULASAN:", error);
+  alert("Gagal: " + error.code + "\n" + error.message);
+}
 }
 
 // Mengamankan teks sebelum dimasukkan ke HTML
